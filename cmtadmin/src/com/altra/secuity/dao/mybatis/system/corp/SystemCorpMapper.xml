@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.system.corp.SystemCorpMapper" >
+  <resultMap id="BaseResultMap" type="com.altra.secuity.model.system.SystemCorp" >
+    <id column="sc_id" property="scId" jdbcType="BIGINT" />
+    <result column="sc_id" property="scId" jdbcType="VARCHAR" />
+    <result column="sc_name" property="scName" jdbcType="VARCHAR" />
+    <result column="sc_short_name" property="scShortName" jdbcType="VARCHAR" />
+    <result column="sc_pid" property="scPid" jdbcType="VARCHAR" />
+    <result column="sc_pname" property="scPname" jdbcType="VARCHAR" />
+    <result column="sc_top_id" property="scTopId" jdbcType="VARCHAR" />
+    <result column="sc_top_name" property="scTopName" jdbcType="VARCHAR" />
+    <result column="sc_city" property="scCity" jdbcType="VARCHAR" />
+    <result column="sc_province" property="scProvince" jdbcType="VARCHAR" />
+    <result column="sc_address" property="scAddress" jdbcType="VARCHAR" />
+    <result column="sc_info" property="scInfo" jdbcType="VARCHAR" />
+    <result column="sc_user_info" property="scUserInfo" jdbcType="VARCHAR" />
+    <result column="sc_holding" property="scHolding" jdbcType="VARCHAR" />
+    <result column="sc_safe_responsib" property="scSafeResponsib" jdbcType="VARCHAR" />
+    <result column="sc_anti_risk" property="scAntiRisk" jdbcType="VARCHAR" />
+    <result column="sc_is_chemical" property="scIsChemical" jdbcType="VARCHAR" />
+    <result column="sc_chemical_info" property="scChemicalInfo" jdbcType="VARCHAR" />
+    <result column="sc_is_hazard" property="scIsHazard" jdbcType="VARCHAR" />
+    <result column="sc_hazard_info" property="scHazardInfo" jdbcType="VARCHAR" />
+    <result column="sc_longitude" property="scLongitude" jdbcType="VARCHAR" />
+    <result column="sc_latitude" property="scLatitude" jdbcType="VARCHAR" />
+    <result column="sc_sip_num" property="scSipNum" jdbcType="VARCHAR" />
+    <result column="sc_order" property="scOrder" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ <sql id="Base_Column_List" >
+     	sc_id,
+     	sc_name,
+     	sc_short_name,
+     	sc_pid,
+     	sc_pname,
+     	sc_top_id,
+     	sc_top_name,
+     	sc_city,
+     	sc_province,
+     	sc_address,
+     	sc_info,
+     	sc_user_info,
+     	sc_holding,
+     	sc_safe_responsib,
+     	sc_anti_risk,
+     	sc_is_chemical,
+     	sc_chemical_info,
+     	sc_is_hazard,
+     	sc_hazard_info,
+     	sc_longitude,
+     	sc_latitude,
+     	sc_sip_num,
+     	sc_order,
+     	create_time
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+		<include refid="Base_Column_List" />
+    from system_corp 
+    where  sc_id = #{ scId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from system_corp 
+    where sc_id =  #{ scId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from system_corp
+    where sc_id in
+    <foreach collection="list" item="scId" index="index"
+            open="(" close=")" separator=",">
+             #{ scId,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+  
+  
+	<insert id="insertSelective" parameterType="com.altra.secuity.model.system.SystemCorp">
+		insert into system_corp
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="scId != null">
+				sc_id,
+			</if>
+			<if test="scName != null">
+				sc_name,
+			</if>
+			<if test="scShortName != null">
+				sc_short_name,
+			</if>
+			<if test="scPid != null">
+				sc_pid,
+			</if>
+			<if test="scPname != null">
+				sc_pname,
+			</if>
+			<if test="scTopId != null">
+				sc_top_id,
+			</if>
+			<if test="scTopName != null">
+				sc_top_name,
+			</if>
+			<if test="scCity != null">
+				sc_city,
+			</if>
+			<if test="scProvince != null">
+				sc_province,
+			</if>
+			<if test="scAddress != null">
+				sc_address,
+			</if>
+			<if test="scInfo != null">
+				sc_info,
+			</if>
+			<if test="scUserInfo != null">
+				sc_user_info,
+			</if>
+			<if test="scHolding != null">
+				sc_holding,
+			</if>
+			<if test="scSafeResponsib != null">
+				sc_safe_responsib,
+			</if>
+			<if test="scAntiRisk != null">
+				sc_anti_risk,
+			</if>
+			<if test="scIsChemical != null">
+				sc_is_chemical,
+			</if>
+			<if test="scChemicalInfo != null">
+				sc_chemical_info,
+			</if>
+			<if test="scIsHazard != null">
+				sc_is_hazard,
+			</if>
+			<if test="scHazardInfo != null">
+				sc_hazard_info,
+			</if>
+			<if test="scLongitude != null">
+				sc_longitude,
+			</if>
+			<if test="scLatitude != null">
+				sc_latitude,
+			</if>
+			<if test="scSipNum != null">
+				sc_sip_num,
+			</if>
+			<if test="scOrder != null">
+				sc_order,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="scId != null">
+				 #{ scId,jdbcType= VARCHAR },
+			</if>
+			<if test="scName != null">
+				 #{ scName,jdbcType= VARCHAR },
+			</if>
+			<if test="scShortName != null">
+				 #{ scShortName,jdbcType= VARCHAR },
+			</if>
+			<if test="scPid != null">
+				 #{ scPid,jdbcType= VARCHAR },
+			</if>
+			<if test="scPname != null">
+				 #{ scPname,jdbcType= VARCHAR },
+			</if>
+			<if test="scTopId != null">
+				 #{ scTopId,jdbcType= VARCHAR },
+			</if>
+			<if test="scTopName != null">
+				 #{ scTopName,jdbcType= VARCHAR },
+			</if>
+			<if test="scCity != null">
+				 #{ scCity,jdbcType= VARCHAR },
+			</if>
+			<if test="scProvince != null">
+				 #{ scProvince,jdbcType= VARCHAR },
+			</if>
+			<if test="scAddress != null">
+				 #{ scAddress,jdbcType= VARCHAR },
+			</if>
+			<if test="scInfo != null">
+				 #{ scInfo,jdbcType= VARCHAR },
+			</if>
+			<if test="scUserInfo != null">
+				 #{ scUserInfo,jdbcType= VARCHAR },
+			</if>
+			<if test="scHolding != null">
+				 #{ scHolding,jdbcType= VARCHAR },
+			</if>
+			<if test="scSafeResponsib != null">
+				 #{ scSafeResponsib,jdbcType= VARCHAR },
+			</if>
+			<if test="scAntiRisk != null">
+				 #{ scAntiRisk,jdbcType= VARCHAR },
+			</if>
+			<if test="scIsChemical != null">
+				 #{ scIsChemical,jdbcType= VARCHAR },
+			</if>
+			<if test="scChemicalInfo != null">
+				 #{ scChemicalInfo,jdbcType= VARCHAR },
+			</if>
+			<if test="scIsHazard != null">
+				 #{ scIsHazard,jdbcType= VARCHAR },
+			</if>
+			<if test="scHazardInfo != null">
+				 #{ scHazardInfo,jdbcType= VARCHAR },
+			</if>
+			<if test="scLongitude != null">
+				 #{ scLongitude,jdbcType= VARCHAR },
+			</if>
+			<if test="scLatitude != null">
+				 #{ scLatitude,jdbcType= VARCHAR },
+			</if>
+			<if test="scSipNum != null">
+				 #{ scSipNum,jdbcType= VARCHAR },
+			</if>
+			<if test="scOrder != null">
+				 #{ scOrder,jdbcType= VARCHAR },
+			</if>
+			<if test="createTime != null">
+				 #{ createTime,jdbcType= VARCHAR },
+			</if>
+		</trim>
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="scId">
+			SELECT LAST_INSERT_ID() AS sc_id
+		</selectKey>
+	</insert>
+   
+   <select id="selectSystemCorp" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from system_corp
+		where 1=1
+		  <if test="province != null">
+			AND sc_province   LIKE CONCAT(CONCAT('%', #{province}), '%')
+		  </if>
+		  <if test="city != null">
+			AND sc_city  LIKE CONCAT(CONCAT('%', #{city}), '%')
+		  </if>
+		  <if test="twoUnits != null">
+			AND sc_pname  LIKE CONCAT(CONCAT('%', #{twoUnits}), '%')
+		  </if>
+		  <if test="address != null">
+			AND sc_address   LIKE CONCAT(CONCAT('%', #{address}), '%')
+		  </if>
+		  <if test="hazardSource != null">
+			AND sc_hazard_info  LIKE CONCAT(CONCAT('%', #{hazardSource}), '%')
+		  </if>
+		  <if test="companyName != null">
+			AND sc_companyName  LIKE CONCAT(CONCAT('%', #{companyName}), '%')
+		  </if>
+		 
+		ORDER BY sc_id desc
+	
+	</select>
+	
+	
+	 <select id="selectCorpTwoUnits" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from system_corp
+		where 1=1
+		 
+		  <if test="twoUnits != null">
+			AND sc_pid=  #{ twoUnits,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scName != null">
+			AND sc_name LIKE CONCAT(CONCAT('%', #{scName}), '%')
+		  </if>
+		ORDER BY sc_id desc
+		
+	</select>
+   <select id="selectByPropertyByPage" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from system_corp
+		where 1=1
+		  <if test="scId != null">
+			AND sc_id =  #{ scId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scName != null">
+			AND sc_name LIKE CONCAT(CONCAT('%', #{scName}), '%')
+		  </if>
+		  <if test="scShortName != null">
+			AND sc_short_name  LIKE CONCAT(CONCAT('%', #{scShortName}), '%')
+		  </if>
+		  <if test="scPid != null">
+			AND sc_pid =  #{ scPid,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scPname != null">
+			AND sc_pname   LIKE CONCAT(CONCAT('%', #{scPname}), '%')
+		  </if>
+		  <if test="scTopId != null">
+			AND sc_top_id =  #{ scTopId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scTopName != null">
+			AND sc_top_name   LIKE CONCAT(CONCAT('%', #{scTopName}), '%')
+		  </if>
+		  <if test="scCity != null">
+			AND sc_city  LIKE CONCAT(CONCAT('%', #{scCity}), '%')
+		  </if>
+		  <if test="scProvince != null">
+			AND sc_province  LIKE CONCAT(CONCAT('%', #{scProvince}), '%')
+		  </if>
+		  <if test="scAddress != null">
+			AND sc_address  LIKE CONCAT(CONCAT('%', #{scAddress}), '%')
+		  </if>
+		  <if test="scInfo != null">
+			AND sc_info LIKE CONCAT(CONCAT('%', #{sc_info}), '%')
+		  </if>
+		  <if test="scUserInfo != null">
+			AND sc_user_info =  #{ scUserInfo,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scHolding != null">
+			AND sc_holding =  #{ scHolding,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scSafeResponsib != null">
+			AND sc_safe_responsib =  #{ scSafeResponsib,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scAntiRisk != null">
+			AND sc_anti_risk =  #{ scAntiRisk,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scIsChemical != null">
+			AND sc_is_chemical =  #{ scIsChemical,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scChemicalInfo != null">
+			AND sc_chemical_info =  #{ scChemicalInfo,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scIsHazard != null">
+			AND sc_is_hazard =  #{ scIsHazard,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scHazardInfo != null">
+			AND sc_hazard_info LIKE CONCAT(CONCAT('%', #{scHazardInfo}), '%')
+		  </if>
+		  <if test="scLongitude != null">
+			AND sc_longitude =  #{ scLongitude,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scLatitude != null">
+			AND sc_latitude =  #{ scLatitude,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scSipNum != null">
+			AND sc_sip_num =  #{ scSipNum,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scOrder != null">
+			AND sc_order =  #{ scOrder,jdbcType= VARCHAR }
+		  </if>
+		  <if test="createTime != null">
+			AND create_time =  #{ createTime,jdbcType= VARCHAR }
+		  </if>
+		ORDER BY sc_id desc
+		<if test="startindex!=null and maxindex!=null">
+		 	limit #{startindex},#{maxindex} 
+		</if>
+	</select>
+	
+	 <select id="selectCountByProperty"  resultType="java.lang.Integer"
+		parameterType="Map">
+		select
+		count(1)
+		from system_corp
+		where 1=1
+		  <if test="scId != null">
+			AND sc_id =  #{ scId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scName != null">
+			AND sc_name LIKE CONCAT(CONCAT('%', #{scName}), '%')
+		  </if>
+		  <if test="scShortName != null">
+			AND sc_short_name  LIKE CONCAT(CONCAT('%', #{scShortName}), '%')
+		  </if>
+		  <if test="scPid != null">
+			AND sc_pid =  #{ scPid,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scPname != null">
+			AND sc_pname  LIKE CONCAT(CONCAT('%', #{scPname}), '%')
+		  </if>
+		  <if test="scTopId != null">
+			AND sc_top_id =  #{ scTopId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scTopName != null">
+			AND sc_top_name  LIKE CONCAT(CONCAT('%', #{scTopName}), '%')
+		  </if>
+		  <if test="scCity != null">
+			AND sc_city  LIKE CONCAT(CONCAT('%', #{scCity}), '%')
+		  </if>
+		  <if test="scProvince != null">
+			AND sc_province  LIKE CONCAT(CONCAT('%', #{scProvince}), '%')
+		  </if>
+		  <if test="scAddress != null">
+			AND sc_address  LIKE CONCAT(CONCAT('%', #{scAddress}), '%')
+		  </if>
+		  <if test="scInfo != null">
+			AND sc_info LIKE CONCAT(CONCAT('%', #{sc_info}), '%')
+		  </if>
+		  <if test="scUserInfo != null">
+			AND sc_user_info =  #{ scUserInfo,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scHolding != null">
+			AND sc_holding =  #{ scHolding,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scSafeResponsib != null">
+			AND sc_safe_responsib =  #{ scSafeResponsib,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scAntiRisk != null">
+			AND sc_anti_risk =  #{ scAntiRisk,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scIsChemical != null">
+			AND sc_is_chemical =  #{ scIsChemical,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scChemicalInfo != null">
+			AND sc_chemical_info =  #{ scChemicalInfo,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scIsHazard != null">
+			AND sc_is_hazard =  #{ scIsHazard,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scHazardInfo != null">
+			AND sc_hazard_info   LIKE CONCAT(CONCAT('%', #{scHazardInfo}), '%')
+		  </if>
+		  <if test="scLongitude != null">
+			AND sc_longitude =  #{ scLongitude,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scLatitude != null">
+			AND sc_latitude =  #{ scLatitude,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scSipNum != null">
+			AND sc_sip_num =  #{ scSipNum,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scOrder != null">
+			AND sc_order =  #{ scOrder,jdbcType= VARCHAR }
+		  </if>
+		  <if test="createTime != null">
+			AND create_time =  #{ createTime,jdbcType= VARCHAR }
+		  </if>
+	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.altra.secuity.model.system.SystemCorp">
+		<if test="scId !=null">
+			update system_corp
+			<set>
+     			 sc_id =  #{ scId,jdbcType= VARCHAR },
+     			 sc_name =  #{ scName,jdbcType= VARCHAR },
+     			 sc_short_name =  #{ scShortName,jdbcType= VARCHAR },
+     			 sc_pid =  #{ scPid,jdbcType= VARCHAR },
+     			 sc_pname =  #{ scPname,jdbcType= VARCHAR },
+     			 sc_top_id =  #{ scTopId,jdbcType= VARCHAR },
+     			 sc_top_name =  #{ scTopName,jdbcType= VARCHAR },
+     			 sc_city =  #{ scCity,jdbcType= VARCHAR },
+     			 sc_province =  #{ scProvince,jdbcType= VARCHAR },
+     			 sc_address =  #{ scAddress,jdbcType= VARCHAR },
+     			 sc_info =  #{ scInfo,jdbcType= VARCHAR },
+     			 sc_user_info =  #{ scUserInfo,jdbcType= VARCHAR },
+     			 sc_holding =  #{ scHolding,jdbcType= VARCHAR },
+     			 sc_safe_responsib =  #{ scSafeResponsib,jdbcType= VARCHAR },
+     			 sc_anti_risk =  #{ scAntiRisk,jdbcType= VARCHAR },
+     			 sc_is_chemical =  #{ scIsChemical,jdbcType= VARCHAR },
+     			 sc_chemical_info =  #{ scChemicalInfo,jdbcType= VARCHAR },
+     			 sc_is_hazard =  #{ scIsHazard,jdbcType= VARCHAR },
+     			 sc_hazard_info =  #{ scHazardInfo,jdbcType= VARCHAR },
+     			 sc_longitude =  #{ scLongitude,jdbcType= VARCHAR },
+     			 sc_latitude =  #{ scLatitude,jdbcType= VARCHAR },
+     			 sc_sip_num =  #{ scSipNum,jdbcType= VARCHAR },
+     			 sc_order =  #{ scOrder,jdbcType= VARCHAR },
+     			 create_time =  #{ createTime,jdbcType= VARCHAR }
+			</set>
+			where sc_id =  #{ scId,jdbcType=BIGINT}
+		</if>
+	</update>
+  
+</mapper>

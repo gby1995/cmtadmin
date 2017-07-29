@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.logs.records.LogsRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.altra.secuity.model.logs.LogsRecords" >
+    <id column="re_id" property="reId" jdbcType="BIGINT" />
+    <result column="re_id" property="reId" jdbcType="VARCHAR" />
+    <result column="re_date" property="reDate" jdbcType="VARCHAR" />
+    <result column="re_name" property="reName" jdbcType="VARCHAR" />
+    <result column="re_role" property="reRole" jdbcType="VARCHAR" />
+    <result column="re_type" property="reType" jdbcType="VARCHAR" />
+    <result column="re_content" property="reContent" jdbcType="VARCHAR" />
+    <result column="corp_id" property="corpId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ <sql id="Base_Column_List" >
+     	re_id,
+     	re_date,
+     	re_name,
+     	re_role,
+     	re_type,
+     	re_content,
+     	corp_id
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+		<include refid="Base_Column_List" />
+    from logs_records 
+    where  re_id = #{ reId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from logs_records 
+    where re_id =  #{ reId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from logs_records
+    where re_id in
+    <foreach collection="list" item="reId" index="index"
+            open="(" close=")" separator=",">
+             #{ reId,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+  
+  
+	<insert id="insertSelective" parameterType="com.altra.secuity.model.logs.LogsRecords">
+		insert into logs_records
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="reId != null">
+				re_id,
+			</if>
+			<if test="reDate != null">
+				re_date,
+			</if>
+			<if test="reName != null">
+				re_name,
+			</if>
+			<if test="reRole != null">
+				re_role,
+			</if>
+			<if test="reType != null">
+				re_type,
+			</if>
+			<if test="reContent != null">
+				re_content,
+			</if>
+			<if test="corpId != null">
+				corp_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="reId != null">
+				 #{ reId,jdbcType= VARCHAR },
+			</if>
+			<if test="reDate != null">
+				 #{ reDate,jdbcType= VARCHAR },
+			</if>
+			<if test="reName != null">
+				 #{ reName,jdbcType= VARCHAR },
+			</if>
+			<if test="reRole != null">
+				 #{ reRole,jdbcType= VARCHAR },
+			</if>
+			<if test="reType != null">
+				 #{ reType,jdbcType= VARCHAR },
+			</if>
+			<if test="reContent != null">
+				 #{ reContent,jdbcType= VARCHAR },
+			</if>
+			<if test="corpId != null">
+				 #{ corpId,jdbcType= VARCHAR },
+			</if>
+		</trim>
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="reId">
+			SELECT LAST_INSERT_ID() AS re_id
+		</selectKey>
+	</insert>
+   
+   <select id="selectByPropertyByPage" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from logs_records
+		where 1=1
+		  <if test="reId != null">
+			AND re_id =  #{ reId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="reDate != null">
+			AND re_date =  #{ reDate,jdbcType= VARCHAR }
+		  </if>
+		  <if test="firDate != null and secDate != null">
+			AND re_date &gt; #{ firDate,jdbcType= VARCHAR }
+			AND re_date &lt; #{ secDate,jdbcType= VARCHAR }
+		  </if>
+		  <if test="reName != null">
+			AND re_name LIKE CONCAT(CONCAT('%', #{ reName,jdbcType= VARCHAR }),'%') 
+		  </if>
+		  <if test="reRole != null">
+			AND re_role =  #{ reRole,jdbcType= VARCHAR }
+		  </if>
+		  <if test="reType != null">
+			AND re_type =  #{ reType,jdbcType= VARCHAR }
+		  </if>
+		  <if test="reContent != null">
+			AND re_content =  #{ reContent,jdbcType= VARCHAR }
+		  </if>
+		  <if test="corpId != null">
+			AND corp_id =  #{ corpId,jdbcType= VARCHAR }
+		  </if>
+		ORDER BY re_id desc
+		<if test="startindex!=null and maxindex!=null">
+		 	limit #{startindex},#{maxindex} 
+		</if>
+	</select>
+	
+	 <select id="selectCountByProperty"  resultType="java.lang.Integer"
+		parameterType="Map">
+		select
+		count(1)
+		from logs_records
+		where 1=1
+		  <if test="reId != null">
+			AND re_id =  #{ reId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="reDate != null">
+			AND re_date =  #{ reDate,jdbcType= VARCHAR }
+		  </if>
+		  <if test="firDate != null and secDate != null">
+			AND re_date &gt; #{ firDate,jdbcType= VARCHAR }
+			AND re_date &lt; #{ secDate,jdbcType= VARCHAR }
+		  </if>
+		  <if test="reName != null">
+			AND re_name LIKE CONCAT(CONCAT('%', #{ reName,jdbcType= VARCHAR }),'%') 
+		  </if>
+		  <if test="reRole != null">
+			AND re_role =  #{ reRole,jdbcType= VARCHAR }
+		  </if>
+		  <if test="reType != null">
+			AND re_type =  #{ reType,jdbcType= VARCHAR }
+		  </if>
+		  <if test="reContent != null">
+			AND re_content =  #{ reContent,jdbcType= VARCHAR }
+		  </if>
+		  <if test="corpId != null">
+			AND corp_id =  #{ corpId,jdbcType= VARCHAR }
+		  </if>
+	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.altra.secuity.model.logs.LogsRecords">
+		<if test="reId !=null">
+			update logs_records
+			<set>
+     			 re_id =  #{ reId,jdbcType= VARCHAR },
+     			 re_date =  #{ reDate,jdbcType= VARCHAR },
+     			 re_name =  #{ reName,jdbcType= VARCHAR },
+     			 re_role =  #{ reRole,jdbcType= VARCHAR },
+     			 re_type =  #{ reType,jdbcType= VARCHAR },
+     			 re_content =  #{ reContent,jdbcType= VARCHAR },
+     			 corp_id =  #{ corpId,jdbcType= VARCHAR }
+			</set>
+			where re_id =  #{ reId,jdbcType=BIGINT}
+		</if>
+	</update>
+  
+</mapper>

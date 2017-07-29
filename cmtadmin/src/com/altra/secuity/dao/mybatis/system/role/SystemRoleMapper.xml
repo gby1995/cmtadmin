@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.system.role.SystemRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.altra.secuity.model.system.SystemRole" >
+    <id column="sr_id" property="srId" jdbcType="BIGINT" />
+    <result column="sr_id" property="srId" jdbcType="VARCHAR" />
+    <result column="sr_code" property="srCode" jdbcType="VARCHAR" />
+    <result column="sr_name" property="srName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ <sql id="Base_Column_List" >
+     	sr_id,
+     	sr_code,
+     	sr_name
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+		<include refid="Base_Column_List" />
+    from system_role 
+    where  sr_id = #{ srId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from system_role 
+    where sr_id =  #{ srId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from system_role
+    where sr_id in
+    <foreach collection="list" item="srId" index="index"
+            open="(" close=")" separator=",">
+             #{ srId,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+  
+  
+	<insert id="insertSelective" parameterType="com.altra.secuity.model.system.SystemRole">
+		insert into system_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="srId != null">
+				sr_id,
+			</if>
+			<if test="srCode != null">
+				sr_code,
+			</if>
+			<if test="srName != null">
+				sr_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="srId != null">
+				 #{ srId,jdbcType= VARCHAR },
+			</if>
+			<if test="srCode != null">
+				 #{ srCode,jdbcType= VARCHAR },
+			</if>
+			<if test="srName != null">
+				 #{ srName,jdbcType= VARCHAR },
+			</if>
+		</trim>
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="srId">
+			SELECT LAST_INSERT_ID() AS sr_id
+		</selectKey>
+	</insert>
+   
+   <select id="selectByPropertyByPage" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from system_role
+		where 1=1
+		  <if test="srId != null">
+			AND sr_id =  #{ srId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="srCode != null">
+			AND sr_code =  #{ srCode,jdbcType= VARCHAR }
+		  </if>
+		  <if test="srName != null">
+			AND sr_name =  #{ srName,jdbcType= VARCHAR }
+		  </if>
+		ORDER BY sr_id desc
+		<if test="startindex!=null and maxindex!=null">
+		 	limit #{startindex},#{maxindex} 
+		</if>
+	</select>
+	
+	 <select id="selectCountByProperty"  resultType="java.lang.Integer"
+		parameterType="Map">
+		select
+		count(1)
+		from system_role
+		where 1=1
+		  <if test="srId != null">
+			AND sr_id =  #{ srId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="srCode != null">
+			AND sr_code =  #{ srCode,jdbcType= VARCHAR }
+		  </if>
+		  <if test="srName != null">
+			AND sr_name =  #{ srName,jdbcType= VARCHAR }
+		  </if>
+	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.altra.secuity.model.system.SystemRole">
+		<if test="srId !=null">
+			update system_role
+			<set>
+     			 sr_id =  #{ srId,jdbcType= VARCHAR },
+     			 sr_code =  #{ srCode,jdbcType= VARCHAR },
+     			 sr_name =  #{ srName,jdbcType= VARCHAR }
+			</set>
+			where sr_id =  #{ srId,jdbcType=BIGINT}
+		</if>
+	</update>
+  
+  <!-- 根据属性分页查询 (与权限表关联) -->
+   <select id="selectByPropertyByPageByAction" resultMap="BaseResultMap" parameterType="Map">
+		select * from system_role 
+		<if test="srCode != null">
+			where  sr_code like  CONCAT(CONCAT('%', #{ srCode,jdbcType= VARCHAR }),'%') 
+		</if>
+		<if test="srName != null">
+			OR sr_name like  CONCAT(CONCAT('%', #{ srName,jdbcType= VARCHAR }),'%') 
+		</if>
+		
+		<if test="startindex!=null and maxindex!=null">
+		 	limit #{startindex},#{maxindex} 
+		</if>
+	</select>
+	
+	<!-- 根据属查询记录条数 (与权限表关联)  -->
+	 <select id="selectCountByPropertyByAction"  resultType="java.lang.Integer" parameterType="Map">
+		select count(1) from system_role
+		<if test="srCode != null">
+			where sr_code like  CONCAT(CONCAT('%', #{ srCode,jdbcType= VARCHAR }),'%') 
+		</if>
+		<if test="srName != null">
+			OR sr_name  like  CONCAT(CONCAT('%', #{ srName,jdbcType= VARCHAR }),'%') 
+		</if>
+	</select>
+</mapper>

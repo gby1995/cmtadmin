@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.common.tree.MonitorTreeMapper" >
+   <resultMap id="BaseResultMap" type="com.altra.secuity.model.common.TreeBean" >
+    <id column="act_id" property="id" jdbcType="VARCHAR" />
+    <result column="act_name" property="name" jdbcType="VARCHAR" />
+    <result column="act_parent_id" property="pId" jdbcType="VARCHAR" />
+    <result column="open" property="open" jdbcType="VARCHAR" />
+    <result column="isParent" property="isParent" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ <sql id="Base_Column_List" >
+     	act_id,
+     	act_name,
+     	act_parent_id
+  </sql>
+  <!-- 根据主键查询角色 -->
+   <select id="selectByPrimaryKeyFromCorpId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+   select  ha.app_id as act_id,ha.hs_name as act_name, 0 as act_parent_id,true as open,true as isParent from hazards_apply ha where ha.company_id=#{cropId}
+  </select>
+   <!-- 根据主键查询角色 -->
+  <select id="selectByPrimaryKeyFromAppId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+   select  de.dev_id as act_id,concat(de.dev_address,',',de.dev_type) as act_name, #{appId} as act_parent_id from system_hs_device de where de.app_id=#{appId}
+  </select>
+  
+   <!-- 根据乡镇查询企业 -->
+  <select id="gettopCorpTree" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+   	select  de.sc_id as act_id, de.sc_name as act_name, de.sc_pid as act_parent_id,true as isParent,'corp' as iconSkin from system_corp de where de.sc_pid=#{corpId}
+  </select>
+  
+</mapper>

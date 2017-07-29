@@ -1,0 +1,6 @@
+/com/
+/configuration.properties
+/ehcache.xml
+/ftl/
+/logback.xml
+/mongodb.properties

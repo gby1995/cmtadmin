@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.system.action.SystemActionMapper" >
+  <resultMap id="BaseResultMap" type="com.altra.secuity.model.system.SystemAction" >
+    <result column="act_id" property="actId" jdbcType="BIGINT" />
+    <result column="act_name" property="actName" jdbcType="VARCHAR" />
+    <result column="act_parent_id" property="actParentId" jdbcType="BIGINT" />
+    <result column="act_order" property="actOrder" jdbcType="BIGINT" />
+    <result column="act_url" property="actUrl" jdbcType="VARCHAR" />
+    <result column="act_common" property="actCommon" jdbcType="VARCHAR" />
+    <result column="act_type" property="actType" jdbcType="VARCHAR" />
+    <result column="act_icon" property="actIcon" jdbcType="VARCHAR" />
+  </resultMap>
+  
+
+   <!-- 全查企业端权限（仅注册时用） -->
+	<select id="selectAllCorpAction" resultMap="BaseResultMap">
+		select
+		*
+		from
+		system_action
+		where act_type=0
+	</select>
+	
+	
+</mapper>

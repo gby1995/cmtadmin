@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.system.camera.SystemCameraMapper" >
+  <resultMap id="BaseResultMap" type="com.altra.secuity.model.system.SystemCamera" >
+    <id column="sc_id" property="scId" jdbcType="BIGINT" />
+    <result column="sc_id" property="scId" jdbcType="VARCHAR" />
+    <result column="sc_name" property="scName" jdbcType="VARCHAR" />
+    <result column="sc_num" property="scNum" jdbcType="VARCHAR" />
+    <result column="sc_corp_id" property="scCorpId" jdbcType="VARCHAR" />
+    <result column="sc_corp_name" property="scCorpName" jdbcType="VARCHAR" />
+    <result column="sc_top_corp_id" property="scTopCorpId" jdbcType="VARCHAR" />
+    <result column="sc_top_corp_name" property="scTopCorpName" jdbcType="VARCHAR" />
+    <result column="sc_sip_num" property="scSipNum" jdbcType="VARCHAR" />
+    <result column="sc_web_link" property="scWebLink" jdbcType="VARCHAR" />
+    <result column="sc_login_name" property="scLoginName" jdbcType="VARCHAR" />
+    <result column="sc_login_pwd" property="scLoginPwd" jdbcType="VARCHAR" />
+    <result column="sc_nvr_name" property="scNvrName" jdbcType="VARCHAR" />
+    <result column="sc_nvr_pwd" property="scNvrPwd" jdbcType="VARCHAR" />
+    <result column="sc_order" property="scOrder" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <association property="corp_id" javaType="com.altra.secuity.model.system.SystemCorp">
+    <id column="sc_id" property="scId" jdbcType="BIGINT" />
+    <result column="sc_id" property="scId" jdbcType="VARCHAR" />
+    <result column="sc_name" property="scName" jdbcType="VARCHAR" />
+    <result column="sc_short_name" property="scShortName" jdbcType="VARCHAR" />
+    <result column="sc_pid" property="scPid" jdbcType="VARCHAR" />
+    <result column="sc_pname" property="scPname" jdbcType="VARCHAR" />
+    <result column="sc_top_id" property="scTopId" jdbcType="VARCHAR" />
+    <result column="sc_top_name" property="scTopName" jdbcType="VARCHAR" />
+    <result column="sc_city" property="scCity" jdbcType="VARCHAR" />
+    <result column="sc_province" property="scProvince" jdbcType="VARCHAR" />
+    <result column="sc_address" property="scAddress" jdbcType="VARCHAR" />
+    <result column="sc_info" property="scInfo" jdbcType="VARCHAR" />
+    <result column="sc_user_info" property="scUserInfo" jdbcType="VARCHAR" />
+    <result column="sc_holding" property="scHolding" jdbcType="VARCHAR" />
+    <result column="sc_safe_responsib" property="scSafeResponsib" jdbcType="VARCHAR" />
+    <result column="sc_anti_risk" property="scAntiRisk" jdbcType="VARCHAR" />
+    <result column="sc_is_chemical" property="scIsChemical" jdbcType="VARCHAR" />
+    <result column="sc_chemical_info" property="scChemicalInfo" jdbcType="VARCHAR" />
+    <result column="sc_is_hazard" property="scIsHazard" jdbcType="VARCHAR" />
+    <result column="sc_hazard_info" property="scHazardInfo" jdbcType="VARCHAR" />
+    <result column="sc_longitude" property="scLongitude" jdbcType="VARCHAR" />
+    <result column="sc_latitude" property="scLatitude" jdbcType="VARCHAR" />
+    <result column="sc_sip_num" property="scSipNum" jdbcType="VARCHAR" />
+    <result column="sc_order" property="scOrder" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  
+ <sql id="Base_Column_List" >
+     	sc_id,
+     	sc_name,
+     	sc_num,
+     	sc_corp_id,
+     	sc_corp_name,
+     	sc_top_corp_id,
+     	sc_top_corp_name,
+     	sc_sip_num,
+     	sc_web_link,
+     	sc_login_name,
+     	sc_login_pwd,
+     	sc_nvr_name,
+     	sc_nvr_pwd,
+     	sc_order,
+     	create_time
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+	<include refid="Base_Column_List" />
+    from system_camera 
+    where  sc_id = #{ scId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from system_camera 
+    where sc_id =  #{ scId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from system_camera
+    where sc_id in
+    <foreach collection="list" item="scId" index="index"
+            open="(" close=")" separator=",">
+             #{ scId,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+  
+  
+	<insert id="insertSelective" parameterType="com.altra.secuity.model.system.SystemCamera">
+		insert into system_camera
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="scId != null">
+				sc_id,
+			</if>
+			<if test="scName != null">
+				sc_name,
+			</if>
+			<if test="scNum != null">
+				sc_num,
+			</if>
+			<if test="scCorpId != null">
+				sc_corp_id,
+			</if>
+			<if test="scCorpName != null">
+				sc_corp_name,
+			</if>
+			<if test="scTopCorpId != null">
+				sc_top_corp_id,
+			</if>
+			<if test="scTopCorpName != null">
+				sc_top_corp_name,
+			</if>
+			<if test="scSipNum != null">
+				sc_sip_num,
+			</if>
+			<if test="scWebLink != null">
+				sc_web_link,
+			</if>
+			<if test="scLoginName != null">
+				sc_login_name,
+			</if>
+			<if test="scLoginPwd != null">
+				sc_login_pwd,
+			</if>
+			<if test="scNvrName != null">
+				sc_nvr_name,
+			</if>
+			<if test="scNvrPwd != null">
+				sc_nvr_pwd,
+			</if>
+			<if test="scOrder != null">
+				sc_order,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="scId != null">
+				 #{ scId,jdbcType= VARCHAR },
+			</if>
+			<if test="scName != null">
+				 #{ scName,jdbcType= VARCHAR },
+			</if>
+			<if test="scNum != null">
+				 #{ scNum,jdbcType= VARCHAR },
+			</if>
+			<if test="scCorpId != null">
+				 #{ scCorpId,jdbcType= VARCHAR },
+			</if>
+			<if test="scCorpName != null">
+				 #{ scCorpName,jdbcType= VARCHAR },
+			</if>
+			<if test="scTopCorpId != null">
+				 #{ scTopCorpId,jdbcType= VARCHAR },
+			</if>
+			<if test="scTopCorpName != null">
+				 #{ scTopCorpName,jdbcType= VARCHAR },
+			</if>
+			<if test="scSipNum != null">
+				 #{ scSipNum,jdbcType= VARCHAR },
+			</if>
+			<if test="scWebLink != null">
+				 #{ scWebLink,jdbcType= VARCHAR },
+			</if>
+			<if test="scLoginName != null">
+				 #{ scLoginName,jdbcType= VARCHAR },
+			</if>
+			<if test="scLoginPwd != null">
+				 #{ scLoginPwd,jdbcType= VARCHAR },
+			</if>
+			<if test="scNvrName != null">
+				 #{ scNvrName,jdbcType= VARCHAR },
+			</if>
+			<if test="scNvrPwd != null">
+				 #{ scNvrPwd,jdbcType= VARCHAR },
+			</if>
+			<if test="scOrder != null">
+				 #{ scOrder,jdbcType= VARCHAR },
+			</if>
+			<if test="createTime != null">
+				 #{ createTime,jdbcType= VARCHAR },
+			</if>
+		</trim>
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="scId">
+			SELECT LAST_INSERT_ID() AS sc_id
+		</selectKey>
+	</insert>
+   
+   
+   
+   <select id="selectByGroupUtils" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+		*
+    from system_camera c , system_corp p    where c.sc_corp_id=p.sc_id and c.sc_sip_num= #{ scId,jdbcType=BIGINT}
+  </select>
+  
+     <select id="selectByGroup" resultMap="BaseResultMap" parameterType="Map" >
+    select
+		<include refid="Base_Column_List" />
+    from system_camera   where sc_id in
+    <foreach collection="scId" item="item" index="index"
+            open="(" close=")" separator=",">
+             #{ item,jdbcType=BIGINT}
+    </foreach>
+    	ORDER BY sc_id desc
+		<if test="startindex!=null and maxindex!=null">
+		 	limit #{startindex},#{maxindex} 
+		</if>
+  </select>
+  
+   <select id="selectCountByGroup" resultType="java.lang.Integer"
+		parameterType="Map" >
+        select
+		count(1)
+        from system_camera   where sc_id in
+    <foreach collection="scId" item="item" index="index"
+            open="(" close=")" separator=",">
+             #{ item,jdbcType=BIGINT}
+    </foreach>
+    	ORDER BY sc_id desc
+		<if test="startindex!=null and maxindex!=null">
+		 	limit #{startindex},#{maxindex} 
+		</if>
+  </select>
+  
+  
+   <select id="selectByPropertyByPage" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from system_camera
+		where 1=1
+		  <if test="scId != null">
+			AND sc_id =  #{ scId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scName != null">
+			AND sc_name LIKE CONCAT(CONCAT('%', #{scName}), '%')
+		  </if>
+		  <if test="scNum != null">
+			AND sc_num =  #{ scNum,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scCorpId != null">
+			AND sc_corp_id =  #{ scCorpId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scCorpName != null">
+			AND sc_corp_name LIKE CONCAT(CONCAT('%', #{scCorpName}), '%')
+		  </if>
+		  <if test="scTopCorpId != null">
+			AND sc_top_corp_id =  #{ scTopCorpId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scTopCorpName != null">
+			AND sc_top_corp_name =  #{ scTopCorpName,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scSipNum != null">
+			AND sc_sip_num =  #{ scSipNum,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scWebLink != null">
+			AND sc_web_link =  #{ scWebLink,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scLoginName != null">
+			AND sc_login_name =  #{ scLoginName,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scLoginPwd != null">
+			AND sc_login_pwd =  #{ scLoginPwd,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scNvrName != null">
+			AND sc_nvr_name =  #{ scNvrName,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scNvrPwd != null">
+			AND sc_nvr_pwd =  #{ scNvrPwd,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scOrder != null">
+			AND sc_order =  #{ scOrder,jdbcType= VARCHAR }
+		  </if>
+		  <if test="createTime != null">
+			AND create_time =  #{ createTime,jdbcType= VARCHAR }
+		  </if>
+		ORDER BY sc_id desc
+		<if test="startindex!=null and maxindex!=null">
+		 	limit #{startindex},#{maxindex} 
+		</if>
+	</select>
+	
+	 <select id="selectCountByProperty"  resultType="java.lang.Integer"
+		parameterType="Map">
+		select
+		count(1)
+		from system_camera
+		where 1=1
+		  <if test="scId != null">
+			AND sc_id =  #{ scId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scName != null">
+			AND sc_name  LIKE CONCAT(CONCAT('%', #{scName}), '%')
+		  </if>
+		  <if test="scNum != null">
+			AND sc_num =  #{ scNum,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scCorpId != null">
+			AND sc_corp_id =  #{ scCorpId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scCorpName != null">
+			AND sc_corp_name  LIKE CONCAT(CONCAT('%', #{scCorpName}), '%')
+		  </if>
+		  <if test="scTopCorpId != null">
+			AND sc_top_corp_id =  #{ scTopCorpId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scTopCorpName != null">
+			AND sc_top_corp_name =  #{ scTopCorpName,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scSipNum != null">
+			AND sc_sip_num =  #{ scSipNum,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scWebLink != null">
+			AND sc_web_link =  #{ scWebLink,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scLoginName != null">
+			AND sc_login_name =  #{ scLoginName,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scLoginPwd != null">
+			AND sc_login_pwd =  #{ scLoginPwd,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scNvrName != null">
+			AND sc_nvr_name =  #{ scNvrName,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scNvrPwd != null">
+			AND sc_nvr_pwd =  #{ scNvrPwd,jdbcType= VARCHAR }
+		  </if>
+		  <if test="scOrder != null">
+			AND sc_order =  #{ scOrder,jdbcType= VARCHAR }
+		  </if>
+		  <if test="createTime != null">
+			AND create_time =  #{ createTime,jdbcType= VARCHAR }
+		  </if>
+	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.altra.secuity.model.system.SystemCamera">
+		<if test="scId !=null">
+			update system_camera
+			<set>
+     			 sc_id =  #{ scId,jdbcType= VARCHAR },
+     			 sc_name =  #{ scName,jdbcType= VARCHAR },
+     			 sc_num =  #{ scNum,jdbcType= VARCHAR },
+     			 sc_corp_id =  #{ scCorpId,jdbcType= VARCHAR },
+     			 sc_corp_name =  #{ scCorpName,jdbcType= VARCHAR },
+     			 sc_top_corp_id =  #{ scTopCorpId,jdbcType= VARCHAR },
+     			 sc_top_corp_name =  #{ scTopCorpName,jdbcType= VARCHAR },
+     			 sc_sip_num =  #{ scSipNum,jdbcType= VARCHAR },
+     			 sc_web_link =  #{ scWebLink,jdbcType= VARCHAR },
+     			 sc_login_name =  #{ scLoginName,jdbcType= VARCHAR },
+     			 sc_login_pwd =  #{ scLoginPwd,jdbcType= VARCHAR },
+     			 sc_nvr_name =  #{ scNvrName,jdbcType= VARCHAR },
+     			 sc_nvr_pwd =  #{ scNvrPwd,jdbcType= VARCHAR },
+     			 sc_order =  #{ scOrder,jdbcType= VARCHAR },
+     			 create_time =  #{ createTime,jdbcType= VARCHAR }
+			</set>
+			where sc_id =  #{ scId,jdbcType=BIGINT}
+		</if>
+	</update>
+  
+</mapper>

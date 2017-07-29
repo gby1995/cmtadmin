@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.logs.login.LogsLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.altra.secuity.model.logs.LogsLogin" >
+    <id column="login_id" property="loginId" jdbcType="BIGINT" />
+    <result column="login_id" property="loginId" jdbcType="VARCHAR" />
+    <result column="login_date" property="loginDate" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="login_role" property="loginRole" jdbcType="VARCHAR" />
+    <result column="login_content" property="loginContent" jdbcType="VARCHAR" />
+    <result column="corp_id" property="corpId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ <sql id="Base_Column_List" >
+     	login_id,
+     	login_date,
+     	login_name,
+     	login_role,
+     	login_content,
+     	corp_id
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+		<include refid="Base_Column_List" />
+    from logs_login 
+    where  login_id = #{ loginId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from logs_login 
+    where login_id =  #{ loginId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from logs_login
+    where login_id in
+    <foreach collection="list" item="loginId" index="index"
+            open="(" close=")" separator=",">
+             #{ loginId,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+  
+  
+	<insert id="insertSelective" parameterType="com.altra.secuity.model.logs.LogsLogin">
+		insert into logs_login
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="loginId != null">
+				login_id,
+			</if>
+			<if test="loginDate != null">
+				login_date,
+			</if>
+			<if test="loginName != null">
+				login_name,
+			</if>
+			<if test="loginRole != null">
+				login_role,
+			</if>
+			<if test="loginContent != null">
+				login_content,
+			</if>
+			<if test="corpId != null">
+				corp_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="loginId != null">
+				 #{ loginId,jdbcType= VARCHAR },
+			</if>
+			<if test="loginDate != null">
+				 #{ loginDate,jdbcType= VARCHAR },
+			</if>
+			<if test="loginName != null">
+				 #{ loginName,jdbcType= VARCHAR },
+			</if>
+			<if test="loginRole != null">
+				 #{ loginRole,jdbcType= VARCHAR },
+			</if>
+			<if test="loginContent != null">
+				 #{ loginContent,jdbcType= VARCHAR },
+			</if>
+			<if test="corpId != null">
+				 #{ corpId,jdbcType= VARCHAR },
+			</if>
+		</trim>
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="loginId">
+			SELECT LAST_INSERT_ID() AS login_id
+		</selectKey>
+	</insert>
+   
+   <select id="selectByPropertyByPage" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from logs_login
+		where 1=1
+		AND corp_id = #{ corpId,jdbcType= VARCHAR }
+		  <if test="loginId != null">
+			AND login_id =  #{ loginId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="loginDate != null">
+			AND login_date =  #{ loginDate,jdbcType= VARCHAR }
+		  </if>
+		  <if test="firDate != null and secDate != null">
+			AND login_date &gt; #{ firDate,jdbcType= VARCHAR }
+			AND login_date &lt; #{ secDate,jdbcType= VARCHAR }
+		  </if>
+		  <if test="loginName != null">
+			AND login_name LIKE CONCAT(CONCAT('%', #{ loginName,jdbcType= VARCHAR }),'%') 
+		  </if>
+		  <if test="loginRole != null">
+			AND login_role =  #{ loginRole,jdbcType= VARCHAR }
+		  </if>
+		  <if test="loginContent != null">
+			AND login_content =  #{ loginContent,jdbcType= VARCHAR }
+		  </if>
+		  <if test="corpId != null">
+			AND corp_id =  #{ corpId,jdbcType= VARCHAR }
+		  </if>
+		ORDER BY login_id desc
+		<if test="startindex!=null and maxindex!=null">
+		 	limit #{startindex},#{maxindex} 
+		</if>
+	</select>
+	
+	 <select id="selectCountByProperty"  resultType="java.lang.Integer"
+		parameterType="Map">
+		select
+		count(1)
+		from logs_login
+		where 1=1
+		AND corp_id = #{ corpId,jdbcType= VARCHAR }
+		  <if test="loginId != null">
+			AND login_id =  #{ loginId,jdbcType= VARCHAR }
+		  </if>
+		  <if test="loginDate != null">
+			AND login_date =  #{ loginDate,jdbcType= VARCHAR }
+		  </if>
+		  <if test="firDate != null and secDate != null">
+			AND login_date &gt; #{ firDate,jdbcType= VARCHAR }
+			AND login_date &lt; #{ secDate,jdbcType= VARCHAR }
+		  </if>
+		  <if test="loginName != null">
+			AND login_name LIKE CONCAT(CONCAT('%', #{ loginName,jdbcType= VARCHAR }),'%') 
+		  </if>
+		  <if test="loginRole != null">
+			AND login_role =  #{ loginRole,jdbcType= VARCHAR }
+		  </if>
+		  <if test="loginContent != null">
+			AND login_content =  #{ loginContent,jdbcType= VARCHAR }
+		  </if>
+		  <if test="corpId != null">
+			AND corp_id =  #{ corpId,jdbcType= VARCHAR }
+		  </if>
+	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.altra.secuity.model.logs.LogsLogin">
+		<if test="loginId !=null">
+			update logs_login
+			<set>
+     			 login_id =  #{ loginId,jdbcType= VARCHAR },
+     			 login_date =  #{ loginDate,jdbcType= VARCHAR },
+     			 login_name =  #{ loginName,jdbcType= VARCHAR },
+     			 login_role =  #{ loginRole,jdbcType= VARCHAR },
+     			 login_content =  #{ loginContent,jdbcType= VARCHAR },
+     			 corp_id =  #{ corpId,jdbcType= VARCHAR }
+			</set>
+			where login_id =  #{ loginId,jdbcType=BIGINT}
+		</if>
+	</update>
+  
+</mapper>

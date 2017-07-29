@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.common.menu.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.altra.secuity.model.common.MenuBean" >
+    <id column="act_id" property="id" jdbcType="BIGINT" />
+    <result column="act_name" property="text" jdbcType="VARCHAR" />
+    <result column="act_url" property="url" jdbcType="BIGINT" />
+    <result column="act_icon" property="icon" jdbcType="VARCHAR" />
+    <result column="act_parent_id" property="pid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ <sql id="Base_Column_List" >
+     	act_id,
+     	act_name,
+     	act_parent_id
+     	,act_url,act_icon,act_type
+  </sql>
+   
+  <select id="selectMenusByUser"  parameterType="Map" resultMap="BaseResultMap" >
+  select * from system_action where act_parent_id=0
+  </select>
+  
+   <select id="selectChildMenusByUser" resultMap="BaseResultMap" parameterType="Map" >
+     select <include refid="Base_Column_List" />from system_action where FIND_IN_SET(act_id,queryChildrenMenuTree(#{actType},#{pid}))
+  </select>
+</mapper>

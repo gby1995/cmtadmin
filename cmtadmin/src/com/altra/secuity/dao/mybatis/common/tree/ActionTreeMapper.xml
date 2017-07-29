@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.altra.secuity.dao.mybatis.common.tree.ActionTreeMapper" >
+  <resultMap id="BaseResultMap" type="com.altra.secuity.model.common.TreeBean" >
+    <id column="act_id" property="id" jdbcType="VARCHAR" />
+    <result column="act_name" property="name" jdbcType="VARCHAR" />
+    <result column="act_parent_id" property="pId" jdbcType="BIGINT" />
+  </resultMap>
+  
+ <sql id="Base_Column_List" >
+     	act_id,
+     	act_name,
+     	act_parent_id
+  </sql>
+   
+  <select id="selectTreeNodeByUser"  parameterType="Map" resultMap="BaseResultMap" >
+  select
+  action.act_id,
+  action.act_name,
+  action.act_parent_id from
+  (
+  select <include refid="Base_Column_List" />from system_action where FIND_IN_SET(act_id,queryChildrenActionTree(#{actType}))
+   and act_type= #{actType}
+   ) action
+   ,
+   (select su.user_id,sa.act_type,sa.act_id from system_user su left join
+   system_user_role_ra surr on su.user_id=surr.user_id
+   left join system_role sr on sr.role_id=surr.role_id
+   left join system_role_action_ra srar on sr.role_id = srar.role_id
+   left join system_action sa on sa.act_id=srar.action_id and sa.act_type=srar.action_type
+   where sa.act_type=#{actType} and su.user_id=#{userId}
+   ) user_action
+   where action.act_id=user_action.act_id
+  </select>
+  
+  <!-- 根据主键查询角色 -->
+  <select id="selectByPrimaryKeyFromRoleId" resultMap="BaseResultMap" parameterType="Map" >
+    select
+  action.act_id,
+  action.act_name,
+  action.act_parent_id from
+  (
+  select <include refid="Base_Column_List" />from system_action where FIND_IN_SET(act_id,queryChildrenActionTree(#{actType}))
+   and act_type= #{actType}
+   ) action
+   ,
+   (select sa.act_id from system_role sr left join system_role_action_ra srar 
+    on sr.role_id=srar.role_id left join system_action sa 
+    on srar.action_id=sa.act_id and srar.action_type=sa.act_type where sr.role_id=#{roleId}
+   ) user_action
+   where action.act_id=user_action.act_id
+  </select>
+  
+</mapper>
